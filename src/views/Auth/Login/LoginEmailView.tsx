@@ -13,7 +13,7 @@ import {
 import { useAppStore } from '../../../store';
 import { AppButton, AppLink, AppIconButton, AppAlert, AppForm } from '../../../components';
 import { useAppForm, SHARED_CONTROL_PROPS, eventPreventDefault } from '../../../utils/form';
-import { supabase } from '../../../api/supabaseClient'; // Import your Supabase client
+import { supabase } from '../../../api/supabaseClient'; 
 
 const VALIDATE_FORM_LOGIN_EMAIL = {
   email: {

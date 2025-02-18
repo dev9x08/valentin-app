@@ -6,9 +6,6 @@ interface Props {
   name?: string;
 }
 
-/**
- * Boilerplate for non-implemented Views
- */
 const NotImplementedView: FunctionComponent<Props> = ({ name }) => {
   const location = useLocation();
   const { id: paramId } = useParams();

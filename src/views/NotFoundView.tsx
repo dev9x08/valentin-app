@@ -3,11 +3,6 @@ import { Stack, Typography } from '@mui/material';
 import { AppAlert, AppButton, AppLink, AppView } from '../components';
 
 
-/**
- * "Not Found" aka "Error 404" view
- * url: any unknown :)
- * @page NotFoundView
- */
 const NotFoundView = () => {
   const navigate = useNavigate();
 

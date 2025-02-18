@@ -4,12 +4,6 @@ import { NotFoundView } from '../views';
 import AboutView from '../views/About';
 import WelcomeView from '../views/Welcome';
 
-
-/**
- * List of routes available  for authenticated users
- * Also renders the "Private Layout" composition
- * @routes PrivateRoutes
- */
 const PrivateRoutes = () => {
   return (
     <PrivateLayout>

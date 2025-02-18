@@ -8,9 +8,6 @@ import {
 } from '../../components/dialogs';
 
 
-/**
- * Renders demo section for Dialogs
- */
 const DialogsSection = () => {
   const [modal, setModal] = useState<ReactNode | null>(null);
   const [openEmailDialog, setOpenEmailDialog] = useState(false);
@@ -80,7 +77,6 @@ const DialogsSection = () => {
               title="VisibilityOn icon with LimeGreen (rgb(50, 205, 50)) color"
             />
             <AppIconButton icon="account" color="inherit" title="Account icon with Inherit color" />
-            {/* <AppIconButton icon="close" color="primary" disabled title="Disabled Close icon with Primary color" /> */}
             <br />
             <br />
             <div>

@@ -5,26 +5,21 @@ import { useAuthWatchdog, useIsAuthenticated } from '../hooks';
 import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
 
-/**
- * Renders routes depending on Authenticated or Anonymous users
- * @component Routes
- */
 const Routes = () => {
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(0);
   const isAuthenticated = useIsAuthenticated();
 
   const afterLogin = useCallback(() => {
-    setRefresh((old) => old + 1); // Force re-render
+    setRefresh((old) => old + 1); 
     setLoading(false);
   }, []);
 
   const afterLogout = useCallback(() => {
-    setRefresh((old) => old + 1); // Force re-render
+    setRefresh((old) => old + 1); 
     setLoading(false);
   }, []);
 
-  // Create Auth watchdog, that calls our callbacks wen user is logged in or logged out
   useAuthWatchdog(afterLogin, afterLogout);
 
   if (loading) {

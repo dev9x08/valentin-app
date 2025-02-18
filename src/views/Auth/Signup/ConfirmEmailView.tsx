@@ -7,11 +7,6 @@ import { AppAlert, AppForm } from '../../../components';
 
 const TOKEN_QUERY_PARAM = 'token';
 
-/**
- * Renders "Confirm Email" view for Signup flow
- * url: /auth/signup/confirm-email
- * @page ConfirmEmail
- */
 const ConfirmEmailView = () => {
   const [email, setEmail] = useState<string>('');
   const [error, setError] = useState<string>();
@@ -24,20 +19,16 @@ const ConfirmEmailView = () => {
   console.log('ConfirmEmailView() - token:', token);
 
   useEffect(() => {
-    // Component Mount
-    let componentMounted = true;
 
+    let componentMounted = true;
     async function fetchData() {
-      //TODO: Call any Async API here
-      if (!componentMounted) return; // Component was unmounted during the API call
-      //TODO: Verify API call here
+      if (!componentMounted) return;
 
       setEmail('example@domain.com');
     }
-    fetchData(); // Call API asynchronously
+    fetchData(); 
 
     return () => {
-      // Component Un-mount
       componentMounted = false;
     };
   }, []);

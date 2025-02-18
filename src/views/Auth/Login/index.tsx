@@ -3,10 +3,6 @@ import { NotFoundView } from '../..';
 import LoginEmailView from './LoginEmailView';
 
 
-/**
- * Routes for "Login" flow
- * url: /auth/login/*
- */
 const LoginRoutes = () => {
   return (
     <Routes>

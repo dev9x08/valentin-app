@@ -7,10 +7,6 @@ interface Props {
   title?: string;
 }
 
-/**
- * Renders TopBar composition
- * @component TopBar
- */
 const TopBar: FunctionComponent<Props> = ({ endNode, startNode, title = '', ...restOfProps }) => {
   return (
     <AppBar

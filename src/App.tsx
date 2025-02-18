@@ -4,10 +4,6 @@ import { ErrorBoundary } from './components';
 import Routes from './routes';
 import { ToastContainer } from 'react-toastify';
 
-/**
- * Root Application Component
- * @component MainApp
- */
 const MainApp = () => {
   return (
     <ErrorBoundary name="App">

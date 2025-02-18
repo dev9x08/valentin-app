@@ -19,26 +19,18 @@ interface Props {
   email?: string;
 }
 
-/**
- * Renders "Recover Password" view for Login flow
- * url: /uth/recovery/password
- * @page RecoveryPassword
- * @param {string} [props.email] - pre-populated email in case the user already enters it
- */
+
 const RecoveryPasswordView = ({ email = '' }: Props) => {
   const { formState, onFieldChange, fieldGetError, fieldHasError, isFormValid } = useAppForm({
     validationSchema: VALIDATE_FORM_RECOVERY_PASSWORD,
     initialValues: { email } as FormStateValues,
   });
   const [message, setMessage] = useState<string>();
-  const values = formState.values as FormStateValues; // Typed alias to formState.values as the "Source of Truth"
+  const values = formState.values as FormStateValues; 
 
   const handleFormSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
 
-    // await api.auth.recoverPassword(values);
-
-    //Show message with instructions for the user
     setMessage('Email with instructions has been sent to your address');
   };
 

@@ -96,7 +96,6 @@ const SignupView = () => {
   useEffect(() => {
     let componentMounted = true;
     async function fetchData() {
-      // If you have any async tasks to run on mount, do them here.
       if (!componentMounted) return;
       setLoading(false);
     }
@@ -124,7 +123,6 @@ const SignupView = () => {
     setAgree((oldValue) => !oldValue);
   }, []);
 
-  // Updated handleFormSubmit using Supabase auth
   const handleFormSubmit = useCallback(
     async (event: SyntheticEvent) => {
       event.preventDefault();

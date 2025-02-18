@@ -12,6 +12,7 @@ const WelcomeView = () => {
   const [initalGraph, setInitalGraph] = useState<object>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     const fetchGraphs = async () => {
@@ -35,7 +36,6 @@ const WelcomeView = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     index: number,
     graph:any
   ) => {
@@ -50,43 +50,49 @@ const WelcomeView = () => {
   return (
     <>
     <Stack sx={{display:'flex', flexDirection:{xs:'column', sm:'column', md:'row'}}}>
-    <Box sx={{ width: '100%', maxWidth: {xs:'full', sm:'full', md:300}, bgcolor: 'background.paper' }}>
+    <Box
+      onMouseEnter={() => setExpanded(true)}
+      onMouseLeave={() => setExpanded(false)}
+      sx={{
+        width: { xs: '100%', sm: '100%', md: expanded ? 300 : 50 },
+        bgcolor: 'background.paper',
+        transition: 'width 0.01s ease',
+        overflow: 'hidden',
+      }}
+    >
       <List component="nav" aria-label="main mailbox folders">
         <ListItemButton
           selected={selectedIndex === 0}
-          onClick={(event) => handleListItemClick(event, 0,[])}
-          key = "0"
+          onClick={(event) => handleListItemClick(0, [])}
+          key="0"
         >
           <ListItemIcon>
             <AddIcon />
           </ListItemIcon>
-          <ListItemText primary="CREATE GRAPH" />
+          {expanded && <ListItemText primary="CREATE GRAPH" />}
         </ListItemButton>
       </List>
       <Divider />
       <List component="nav" aria-label="secondary mailbox folder">
-        {
-          (!loading) ? graphs.map((graph:any, index:number) => (
+        {!loading &&
+          graphs.map((graph: any, index: number) => (
             <ListItemButton
-            selected={selectedIndex === index+1}
-            onClick={(event) => handleListItemClick(event, index+1, graph)}
-            key = {index}
-          >
-            <ListItemIcon>
-              <LabelImportantIcon />
-            </ListItemIcon>
-            <ListItemText primary={graph.title} />
-          </ListItemButton>
-          )): null
-        }
-       
+              selected={selectedIndex === index + 1}
+              onClick={(event) => handleListItemClick(index + 1, graph)}
+              key={index}
+            >
+              <ListItemIcon>
+                <LabelImportantIcon />
+              </ListItemIcon>
+              {expanded && <ListItemText primary={graph.title} />}
+            </ListItemButton>
+          ))}
       </List>
     </Box>
     {
       loading ? <CircularProgress color="inherit" size={50} sx={{position:'absolute', left:'50%', top: '50%'}}/> : <AppGraph graphData = {initalGraph} resetGraphs = {resetGraphs}/>
     }
     </Stack>
-   
     </>
   );
 };

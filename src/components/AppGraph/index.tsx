@@ -11,7 +11,7 @@ import ReactFlow, {
   Node,
   Edge,
 } from "reactflow";
-import { Button, TextField, Box, IconButton } from "@mui/material";
+import { Button, TextField, Box, IconButton, Stack } from "@mui/material";
 import {toast} from 'react-toastify';
 import CustomNode from "./CustomNode";
 import CustomEdge from "./CustomEdge";
@@ -54,6 +54,7 @@ const AppGraph = (props:any) => {
       ]);
       setEdges([]);
       setGraphId(undefined);
+      setTitle("");
     }
   }, [props])
 
@@ -141,9 +142,7 @@ const AppGraph = (props:any) => {
     nodes && nodes.find((node) => selectedNode && selectedNode.id === node.id);
 
   const handleGraphSave = async () => {
-    console.log(edges,"edges");
     const user = await useCurrentUser();
-
     if (graphId){
       try {
         const { data: existingGraph, error: selectError } = await supabase
@@ -189,95 +188,99 @@ const AppGraph = (props:any) => {
       if (error) {
         throw error;
       }
-
       toast.success('Graph saved successfully!');
     }
-    
+    await fetchGraph();
   }
 
-  // const fetchGraph = async () => {
-  //   const {data:updatedGraphs} = await supabase.from("graphs").select("*");
-  //   resetGraphs(updatedGraphs);
-  // }
+  const fetchGraph = async() => {
+    const {data:updatedGraphs} = await supabase.from("graphs").select("*");
+    resetGraphs(updatedGraphs);
+  }
 
   return (
     <Box sx={{ width: "100%", height: "100%", position: "relative"}}>
-      <Button
-        onClick={handleCreateNode}
-        variant="contained"
-        color="primary"
-        sx={{
-          position: "absolute",
-          top: 20,
-          left: 20,
-          zIndex: 50,
-        }}
-      >
-        Create Node
-      </Button>
-      <Button 
-          sx={{
-            position: "absolute",
-            top: 20,
-            left: 160,
-            zIndex: 50
-          }}
+      <Stack>
+        <Button
+          onClick={handleCreateNode}
           variant="contained"
-          onClick={handleGraphSave}
-        >
-          Save Graph
-      </Button>
-      <TextField
-        // label="Graph Name"
-        variant="outlined"
-        size="small"
-        value={title? title: ""}
-        onChange={(e) => setTitle(e.target.value)}
-        sx={{position:'absolute', top:80, left:20, zIndex:50, width: 270}}
-      />
-
-      {isSelectedNodeExists && selectedNode && (
-        <Box
+          color="primary"
           sx={{
             position: "absolute",
             top: 20,
-            right: 20,
-            zIndex: 40,
-            backgroundColor: "#f5f5f5",
-            borderRadius: "8px",
-            padding: "10px",
-            border: "2px solid #ccc",
+            left: 20,
+            zIndex: 50,
           }}
         >
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <TextField
-              label="Node Name"
-              variant="outlined"
-              size="small"
-              value={selectedNode?.data?.label}
-              onChange={(e) => {
-                setSelectedNode({
-                  ...selectedNode,
-                  data: { label: e.target.value },
-                });
+          Create Node
+        </Button>
+        <Button 
+            sx={{
+              position: "absolute",
+              top: 20,
+              left: 160,
+              zIndex: 50
+            }}
+            variant="contained"
+            onClick={handleGraphSave}
+          >
+            Save Graph
+        </Button>
+        <TextField
+          label={"Graph Name"}
+          variant="outlined"
+          size="small"
+          value={title? title: ""}
+          onChange={(e) => setTitle(e.target.value)}
+          sx={{position:'absolute', top:80, left:20, zIndex:50, width: 270}}
+        />
+      </Stack>
+    
+      {isSelectedNodeExists && selectedNode && (
+        <Stack>
+            <Box
+              sx={{
+                position: "absolute",
+                top: 20,
+                right: 20,
+                zIndex: 40,
+                backgroundColor: "#f5f5f5",
+                borderRadius: "8px",
+                padding: "10px",
+                border: "2px solid #ccc",
               }}
-              inputRef={ref}
-              sx={{ marginBottom: "4px" }}
-            />
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <IconButton
-                color="primary"
-                onClick={handleSave}
-                sx={{ marginRight: "8px" }}
-              >
-                <SaveIcon />
-              </IconButton>
-              <IconButton color="secondary" onClick={handleCancel}>
-                <CancelIcon />
-              </IconButton>
-            </Box>
+            >
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <TextField
+                  label="Node Name"
+                  variant="outlined"
+                  size="small"
+                  value={selectedNode?.data?.label}
+                  onChange={(e) => {
+                    setSelectedNode({
+                      ...selectedNode,
+                      data: { label: e.target.value },
+                    });
+                  }}
+                  inputRef={ref}
+                  sx={{ marginBottom: "4px" }}
+                />
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <IconButton
+                    color="primary"
+                    onClick={handleSave}
+                    sx={{ marginRight: "8px" }}
+                  >
+                    <SaveIcon />
+                  </IconButton>
+                  <IconButton color="secondary" onClick={handleCancel}>
+                    <CancelIcon />
+                  </IconButton>
+                </Box>
+              </Box>
           </Box>
-      </Box>
+        </Stack>
+        
       )}
       <Box sx={{height:{xs:'70vh', sm:'70vh', md:'90vh'}}}>
         <ReactFlow

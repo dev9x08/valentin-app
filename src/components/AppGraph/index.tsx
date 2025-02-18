@@ -267,7 +267,7 @@ const AppGraph = (props:any) => {
                     });
                   }}
                   inputRef={ref}
-                  sx={{ marginBottom: "4px" }}
+                  sx={{ marginBottom: "4px"}}
                 />
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   <IconButton
@@ -288,7 +288,7 @@ const AppGraph = (props:any) => {
       )}
       <Box sx={{height:{xs:'70vh', sm:'70vh', md:'90vh'}}}>
         <ReactFlow
-          className="absolute z-0 bg-slate-100 text-black"
+          className="absolute z-0 bg-slate-100"
           nodes={nodes}
           onNodesChange={onNodesChange}
           edges={edges}

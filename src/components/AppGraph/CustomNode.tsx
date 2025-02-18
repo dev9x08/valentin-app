@@ -31,6 +31,7 @@ const CustomNode = ({ data, isConnectable, id }: CustomNodeProps) => {
         textAlign: "center",
         cursor: "pointer",
         position: "relative",
+        color: 'black'
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

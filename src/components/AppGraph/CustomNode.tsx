@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { Handle, Position, useReactFlow } from "reactflow";
+import {useMediaQuery, useTheme } from '@mui/material'
 
 interface CustomNodeProps {
   data: { label: string };  
@@ -15,15 +16,18 @@ const CustomNode = ({ data, isConnectable, id }: CustomNodeProps) => {
     setEdges((edges) => edges.filter((edge) => edge.source !== id && edge.target !== id));
   }, [id, setNodes, setEdges]);
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <div
       style={{
         backgroundColor: "white",
-        padding: "10px",
+        padding: isSmallScreen? "2px":"10px",
         fontSize: "12px",
         border: "1px solid black",
         borderRadius: "3px",
-        width: "150px",
+        width: isSmallScreen? "100px" : "150px",
         textAlign: "center",
         cursor: "pointer",
         position: "relative",

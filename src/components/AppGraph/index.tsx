@@ -174,6 +174,10 @@ const AppGraph = (props:any) => {
       }
     }
     else {
+      if (!title){
+        toast.warn("You Must Enter Graph Name!");
+        return;
+      }
       const { data, error } = await supabase
         .from('graphs')
         .insert([

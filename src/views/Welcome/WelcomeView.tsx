@@ -1,4 +1,4 @@
-import { Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Stack } from '@mui/material';
+import { Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Stack, useMediaQuery, useTheme } from '@mui/material';
 import {AppView } from '../../components';
 import AppGraph from '../../components/AppGraph';
 import { useEffect, useState,  } from 'react';
@@ -12,7 +12,20 @@ const WelcomeView = () => {
   const [initalGraph, setInitalGraph] = useState<object>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [expanded, setExpanded] = useState(false);
+  
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const [expanded, setExpanded] = useState(true);
+
+  const mouseEvents = isSmallScreen
+    ? {
+      onMouseEnter: () => setExpanded(true),
+      onMouseLeave: () => setExpanded(true),
+    }
+    : {
+        onMouseEnter: () => setExpanded(true),
+        onMouseLeave: () => setExpanded(false),
+      };
 
   useEffect(() => {
     const fetchGraphs = async () => {
@@ -51,10 +64,9 @@ const WelcomeView = () => {
     <>
     <Stack sx={{display:'flex', flexDirection:{xs:'column', sm:'column', md:'row'}}}>
     <Box
-      onMouseEnter={() => setExpanded(true)}
-      onMouseLeave={() => setExpanded(false)}
+      {...mouseEvents}
       sx={{
-        width: { xs: '100%', sm: '100%', md: expanded ? 300 : 50 },
+        width: { xs: '100%', sm: '100%', md: (!isSmallScreen && expanded) ? 300 : 50 },
         bgcolor: 'background.paper',
         transition: 'width 0.01s ease',
         overflow: 'hidden',
@@ -69,7 +81,7 @@ const WelcomeView = () => {
           <ListItemIcon>
             <AddIcon />
           </ListItemIcon>
-          {expanded && <ListItemText primary="CREATE GRAPH" />}
+          {expanded && <ListItemText primary="CREATE GRAPH"/>}
         </ListItemButton>
       </List>
       <Divider />

@@ -163,11 +163,13 @@ const AppGraph = (props:any) => {
               edges: edges,
             })
             .eq('id', graphId);
-    
+            
           if (error) {
             throw error;
           }
+
           toast.success('Graph updated successfully!');
+          
         }
       } catch (error) {
         toast.error('Error saving graph data.');
@@ -194,7 +196,6 @@ const AppGraph = (props:any) => {
       }
       toast.success('Graph saved successfully!');
     }
-    await fetchGraph();
   }
 
   const fetchGraph = async() => {

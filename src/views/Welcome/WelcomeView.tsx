@@ -7,15 +7,18 @@ import CircularProgress from '@mui/material/CircularProgress';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import AddIcon from '@mui/icons-material/Add';
 
+
 const WelcomeView = () => {
   const [graphs, setGraphs] = useState<any>([]);
   const [initalGraph, setInitalGraph] = useState<object>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedIndex, setSelectedIndex] = useState(0);
   
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [expanded, setExpanded] = useState(true);
+
 
   const mouseEvents = isSmallScreen
     ? {
@@ -46,7 +49,6 @@ const WelcomeView = () => {
     
   }, []);
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleListItemClick = (
     index: number,

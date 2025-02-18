@@ -5,7 +5,6 @@ import { useAuthWatchdog, useIsAuthenticated } from '../hooks';
 import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
 
-
 /**
  * Renders routes depending on Authenticated or Anonymous users
  * @component Routes

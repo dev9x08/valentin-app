@@ -43,6 +43,10 @@ const WelcomeView = () => {
     setInitalGraph(graph);
   };
 
+  const resetGraphs = (data:any) => {
+    setGraphs(data);
+  }
+
   return (
     <>
     <Stack sx={{display:'flex', flexDirection:{xs:'column', sm:'column', md:'row'}}}>
@@ -51,6 +55,7 @@ const WelcomeView = () => {
         <ListItemButton
           selected={selectedIndex === 0}
           onClick={(event) => handleListItemClick(event, 0,[])}
+          key = "0"
         >
           <ListItemIcon>
             <AddIcon />
@@ -65,6 +70,7 @@ const WelcomeView = () => {
             <ListItemButton
             selected={selectedIndex === index+1}
             onClick={(event) => handleListItemClick(event, index+1, graph)}
+            key = {index}
           >
             <ListItemIcon>
               <LabelImportantIcon />
@@ -77,7 +83,7 @@ const WelcomeView = () => {
       </List>
     </Box>
     {
-      loading ? <CircularProgress color="inherit" size={50} sx={{position:'absolute', left:'50%', top: '50%'}}/> : <AppGraph graphData = {initalGraph}/>
+      loading ? <CircularProgress color="inherit" size={50} sx={{position:'absolute', left:'50%', top: '50%'}}/> : <AppGraph graphData = {initalGraph} resetGraphs = {resetGraphs}/>
     }
     </Stack>
    

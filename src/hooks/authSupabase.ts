@@ -7,13 +7,14 @@ type CurrentUser = any | null | undefined;
 
 
 export async function useCurrentUser(): Promise<CurrentUser> {
-  const { data: user } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
+  let user = data.user;
   return user;
 }
 
 
-export function useIsAuthenticated(): boolean {
-  const currentUser = useCurrentUser();
+export function useIsAuthenticated():boolean {
+  const currentUser = localStorage.getItem("user");
   return Boolean(currentUser);
 }
 
@@ -24,9 +25,11 @@ export function useEventLogout(): () => void {
   return useCallback(async () => {
     try {
       await supabase.auth.signOut();
+      
     } catch (error) {
       console.error('Error during sign out:', error);
     }
+    localStorage.removeItem("user");
     dispatch({ type: 'LOG_OUT' });
     navigate('/', { replace: true });
   }, [dispatch, navigate]);
@@ -34,7 +37,6 @@ export function useEventLogout(): () => void {
 
 export function useAuthWatchdog(afterLogin: () => void, afterLogout: () => void) {
   const [, dispatch] = useAppStore();
-
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange(
       (event, session) => {
@@ -49,7 +51,6 @@ export function useAuthWatchdog(afterLogin: () => void, afterLogout: () => void)
         }
       }
     );
-
     return () => {
       data.subscription.unsubscribe();
     };

@@ -66,7 +66,8 @@ const LoginEmailView = () => {
         setError(authError.message);
         return;
       }
-      dispatch({ type: 'LOG_IN' });
+      localStorage.setItem("user", JSON.stringify(data.user));
+      dispatch({ type: 'LOG_IN', payload: true});
       navigate('/', { replace: true });
     },
     [dispatch, navigate, values.email, values.password]

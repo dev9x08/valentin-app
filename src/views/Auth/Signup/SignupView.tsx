@@ -144,7 +144,7 @@ const SignupView = () => {
         return;
       }
       
-      dispatch({ type: 'SIGN_UP' });
+      dispatch({ type: 'SIGN_UP', payload: false});
       navigate('/', { replace: true });
     },
     [dispatch, navigate, values.email, values.password]

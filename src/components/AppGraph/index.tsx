@@ -26,19 +26,23 @@ const AppGraph = (props:any) => {
   const ref = useRef<HTMLInputElement | null>(null);
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
+  const [title, setTitle] = useState<string>("");
   const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
   const edgeTypes = useMemo(() => ({ custom_edge: CustomEdge }), []);
   const [graphId, setGraphId] = useState(undefined);
 
+  const resetGraphs = props.resetGraphs;
 
   useEffect(() => {
     const nodeData = props.graphData?.nodes;
     const edgeData = props.graphData?.edges;
     const id = props.graphData?.id;
+    const graphTitle = props.graphData?.title;
     if (nodeData){
       setNodes(nodeData);
       setEdges(edgeData);
       setGraphId(id);
+      setTitle(graphTitle);
     } else {
       setNodes([
         {
@@ -155,7 +159,7 @@ const AppGraph = (props:any) => {
             .from('graphs')
             .update({
               user_id: user.id,
-              title: "Test Graph",
+              title: title,
               nodes: nodes,
               edges: edges,
             })
@@ -164,7 +168,6 @@ const AppGraph = (props:any) => {
           if (error) {
             throw error;
           }
-    
           toast.success('Graph updated successfully!');
         }
       } catch (error) {
@@ -177,7 +180,7 @@ const AppGraph = (props:any) => {
         .insert([
           {
             user_id: user.id,
-            title: "New Graph",
+            title: title,
             nodes: nodes,
             edges: edges,
           },
@@ -188,8 +191,14 @@ const AppGraph = (props:any) => {
       }
 
       toast.success('Graph saved successfully!');
-    } 
+    }
+    
   }
+
+  // const fetchGraph = async () => {
+  //   const {data:updatedGraphs} = await supabase.from("graphs").select("*");
+  //   resetGraphs(updatedGraphs);
+  // }
 
   return (
     <Box sx={{ width: "100%", height: "100%", position: "relative"}}>
@@ -218,7 +227,14 @@ const AppGraph = (props:any) => {
         >
           Save Graph
       </Button>
-
+      <TextField
+        // label="Graph Name"
+        variant="outlined"
+        size="small"
+        value={title? title: ""}
+        onChange={(e) => setTitle(e.target.value)}
+        sx={{position:'absolute', top:80, left:20, zIndex:50, width: 270}}
+      />
 
       {isSelectedNodeExists && selectedNode && (
         <Box

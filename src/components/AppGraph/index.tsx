@@ -196,11 +196,14 @@ const AppGraph = (props:any) => {
       }
       toast.success('Graph saved successfully!');
     }
+
+    setTimeout(() => {
+      fetchGraph()
+    }, 2000);
   }
 
-  const fetchGraph = async() => {
-    const {data:updatedGraphs} = await supabase.from("graphs").select("*");
-    resetGraphs(updatedGraphs);
+  const fetchGraph = () => {
+    window.location.href = "/";
   }
 
   return (

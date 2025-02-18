@@ -1,5 +1,4 @@
 import { Box, Divider, List, ListItemButton, ListItemIcon, ListItemText, Stack, useMediaQuery, useTheme } from '@mui/material';
-import {AppView } from '../../components';
 import AppGraph from '../../components/AppGraph';
 import { useEffect, useState,  } from 'react';
 import { supabase } from '../../api/supabaseClient';
@@ -58,7 +57,7 @@ const WelcomeView = () => {
     setInitalGraph(graph);
   };
 
-  const resetGraphs = (data:any) => {
+  const resetGraphsData = (data:any) => {
     setGraphs(data);
   }
 
@@ -104,7 +103,7 @@ const WelcomeView = () => {
       </List>
     </Box>
     {
-      loading ? <CircularProgress color="inherit" size={50} sx={{position:'absolute', left:'50%', top: '50%'}}/> : <AppGraph graphData = {initalGraph} resetGraphs = {resetGraphs}/>
+      loading ? <CircularProgress color="inherit" size={50} sx={{position:'absolute', left:'50%', top: '50%'}}/> : <AppGraph graphData = {initalGraph} resetGraphs = {resetGraphsData}/>
     }
     </Stack>
     </>
